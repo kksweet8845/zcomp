@@ -1,0 +1,38 @@
+TARGET=cnn
+GCC:=gcc
+
+C_FLAGS:= -lm -mavx -mavx2 -mavx512f -mavx512vl
+
+INC_DIR:=../common
+INC:= $(wildcard ../common/*.c)
+INC_O:=$(patsubst %.c, %.o, $(INC))
+
+MAIN:= $(wildcard *.c)
+MAIN_O:=$(patsubst %.c, %.o, $(MAIN))
+
+
+.INTERMEDIATE: $(INC_O) $(MAIN_O)
+
+%.o: %.c
+	$(GCC) $(C_FLAGS) -c -o $@ $^ -I../common
+
+
+all: cnn-simd cnn-simdz cnn
+
+
+cnn-simd: cnn-simd.o $(INC_O)
+	echo $(INC_O)
+	$(GCC) $(C_FLAGS) -o $@ $^
+
+cnn-simdz: cnn-simdz.o $(INC_O)
+	$(GCC) $(C_FLAGS) -o $@ $^
+
+cnn: cnn.o $(INC_O)
+	$(GCC) $(C_FLAGS) -o $@ $^
+
+
+run_$(TARGET):
+	../../run-sniper -v -n 1 -c gainestown --memory-profile --roi -- ./$(TARGET) -p 1
+
+
+CLEAN_EXTRA=viz
