@@ -30,8 +30,6 @@ void vkprintf(__m256d a) {
 main(int argc, char* argv[]) {
 
 
-    // SimSetThreadName("main");
-
 
 
     double m[DIM][DIM] __attribute__ ((aligned (32)));
@@ -80,13 +78,17 @@ main(int argc, char* argv[]) {
         }
     }
 
+
+    //* Perform the tile-based matrix multiplication
+    //* P = M * N
+    //* M = size[I*K]
+    //* N = size[K*J]
+    
+
     int ITER = DIM / packed;
 
 
     //* perform matrix multiplication
-
-    // SimRoiStart();
-    // SimNamedMarker(4, "begin");
 
 
     double* m_addr;

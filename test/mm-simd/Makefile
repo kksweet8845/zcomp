@@ -1,9 +1,4 @@
 TARGET=mm
-# include ../shared/Makefile.shared
-
-# $(TARGET): $(TARGET).o
-# 	$(CC) $(TARGET).o -lm $(SNIPER_LDFLAGS) -o $(TARGET)
-
 
 mm-simd:
 	$(CC) -lm -mavx -mavx2 mm-smid.c -o mm-simd -g
@@ -11,9 +6,9 @@ mm-simd:
 mm-tile: mm-tile.c
 	$(CC) -lm -mavx -mavx2 mm-tile.c -o mm-tile -g
 
+mm: mm.c
+	$(CC) -lm -mavx -mavx2 mm.c -o mm -g
 
-# run_$(TARGET):
-# 	../../run-sniper -v -n 1 -c gainestown --memory-profile --roi -- ./$(TARGET) -p 1
 
 CLEAN_EXTRA=viz
 

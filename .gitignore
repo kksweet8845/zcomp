@@ -1,0 +1,5 @@
+.vscode
+test/cnn/cnn
+test/cnn/cnn-simd
+test/cnn/cnn-simdz
+test/mm/mm
